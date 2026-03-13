@@ -14,10 +14,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <div class="d-flex flex-column align-items-center gap-1">
+                    <a href="<?= base_url('admin/anggota') ?>" class="nav-link py-0 d-flex flex-column align-items-center gap-1">
                         <i class="fas fa-users text-center text-white"></i>
-                        <a class="nav-link py-0" href="#">Anggota</a> 
-                    </div>
+                        <span>Anggota</span> 
+                    </a>
                 </li>
                 <li class="nav-item">
                     <div class="d-flex flex-column align-items-center gap-1">

@@ -6,6 +6,7 @@ class Admin extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('M_buku');
+        $this->load->model('M_anggota');
     }
 
     public function index()
@@ -81,5 +82,82 @@ class Admin extends CI_Controller {
         $this->M_buku->delete($id_buku);
         $this->session->set_flashdata('success', 'Buku berhasil di hapus!');
         redirect(base_url('admin/buku'));
+    }
+
+    public function anggota()
+    {
+        $data = [
+            'anggota' => $this->M_anggota->get()
+        ];
+
+        $this->load->view('admin/anggota/v_anggota', $data);
+    }
+
+    public function anggota_tambah()
+    {
+        $this->form_validation->set_rules('nama_anggota', 'Nama Anggota', 'required|trim');
+        $this->form_validation->set_rules('username', 'Username', 'required|trim');
+        $this->form_validation->set_rules('password', 'Password', 'required|trim');
+        $this->form_validation->set_rules('nis', 'NIS', 'required|trim');
+        $this->form_validation->set_rules('kelas', 'Kelas', 'required|trim');
+
+        if($this->form_validation->run() == FALSE) {
+            $this->load->view('admin/anggota/v_anggota-tambah');
+        } else {
+            $data = array(
+                'nama_anggota' => $this->input->post('nama_anggota'),
+                'username' => $this->input->post('username'),
+                'password' => md5($this->input->post('password')),
+                'nis' => $this->input->post('nis'),
+                'kelas' => $this->input->post('kelas')
+            );
+
+            $this->M_anggota->store($data);
+            $this->session->set_flashdata('success', 'Anggota berhasil di tambahkan!');
+            redirect(base_url('admin/anggota'));
+        }
+    }
+
+    public function anggota_edit($id_anggota)
+    {
+        $anggota = $this->M_anggota->get_anggota_by_id($id_anggota);
+
+        $this->form_validation->set_rules('nama_anggota', 'Nama Anggota', 'required|trim');
+        $this->form_validation->set_rules('username', 'Username', 'required|trim');
+        $this->form_validation->set_rules('nis', 'NIS', 'required|trim');
+        $this->form_validation->set_rules('kelas', 'Kelas', 'required|trim');
+
+        if($this->form_validation->run() == FALSE) {
+            $data['a'] = $anggota;
+            $this->load->view('admin/anggota/v_anggota-edit', $data);
+        } else {
+            $data_update = array(
+                'nama_anggota' => $this->input->post('nama_anggota'),
+                'username' => $this->input->post('username'),
+                'nis' => $this->input->post('nis'),
+                'kelas' => $this->input->post('kelas')
+            );
+
+            $password_baru = $this->input->post('password');
+            $password_lama = $this->input->post('password_lama');
+
+            if(!empty($password_baru)) {
+                $data_update['password'] = md5($password_baru);
+            } else {
+                $data_update['password'] = $anggota['password'];
+            }
+
+            $this->M_anggota->update($id_anggota, $data_update);
+            $this->session->set_flashdata('success', 'Anggota berhasil di perbarui!');
+            redirect(base_url('admin/anggota'));
+        }
+
+    }
+
+    public function anggota_delete($id_anggota)
+    {
+        $this->M_anggota->delete($id_anggota);
+        $this->session->set_flashdata('success', 'Anggota berhasil di hapus!');
+        redirect(base_url('admin/anggota'));
     }
 }

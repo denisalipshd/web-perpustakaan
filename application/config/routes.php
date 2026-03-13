@@ -54,7 +54,13 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['admin/dashboard'] = 'admin';
+
 $route['admin/buku'] = 'admin/buku';
 $route['admin/buku/tambah'] = 'admin/buku_tambah';
 $route['admin/buku/edit/(:num)'] = 'admin/buku_edit/$1';
 $route['admin/buku/delete/(:num)'] = 'admin/buku_delete/$1';
+
+$route['admin/anggota'] = 'admin/anggota';
+$route['admin/anggota/tambah'] = 'admin/anggota_tambah';
+$route['admin/anggota/edit/(:num)'] = 'admin/anggota_edit/$1';
+$route['admin/anggota/delete/(:num)'] = 'admin/anggota_delete/$1';
