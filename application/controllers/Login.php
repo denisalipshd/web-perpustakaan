@@ -32,7 +32,7 @@ class Login extends CI_Controller {
 
             if($level == 'admin') {
                 $cek_login = $this->M_login->cek_login('admin', $where)->num_rows();
-                $tujuan = 'admin/dashboard';
+                $tujuan = 'admin';
                 $status = 'login_admin';
             } else {
                 $cek_login = $this->M_login->cek_login('anggota', $where)->num_rows();

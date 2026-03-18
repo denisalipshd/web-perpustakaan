@@ -53,7 +53,8 @@ $route['default_controller'] = 'login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['admin/dashboard'] = 'admin';
+// admin routes
+$route['admin'] = 'admin';
 
 $route['admin/buku'] = 'admin/buku';
 $route['admin/buku/tambah'] = 'admin/buku_tambah';
@@ -64,3 +65,12 @@ $route['admin/anggota'] = 'admin/anggota';
 $route['admin/anggota/tambah'] = 'admin/anggota_tambah';
 $route['admin/anggota/edit/(:num)'] = 'admin/anggota_edit/$1';
 $route['admin/anggota/delete/(:num)'] = 'admin/anggota_delete/$1';
+
+$route['admin/transaksi'] = 'admin/transaksi';
+$route['admin/transaksi/delete/(:num)'] = 'admin/transaksi_delete/$1';
+
+// anggota routes
+$route['anggota'] = 'anggota';
+
+$route['anggota/buku'] = 'anggota/daftar_buku';
+$route['anggota/buku/pinjam/(:num)'] = 'anggota/pinjam_buku/$1';

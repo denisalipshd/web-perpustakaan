@@ -7,6 +7,11 @@ class Admin extends CI_Controller {
         parent::__construct();
         $this->load->model('M_buku');
         $this->load->model('M_anggota');
+        $this->load->model('M_transaksi'); 
+
+        if($this->session->userdata('status') != 'login_admin') {
+            redirect(base_url('login'));
+        }
     }
 
     public function index()
@@ -20,7 +25,7 @@ class Admin extends CI_Controller {
             'buku' => $this->M_buku->get()
         ];
 
-        $this->load->view('admin/v_buku', $data);
+        $this->load->view('admin/buku/v_buku', $data);
     }
 
     public function buku_tambah()
@@ -32,7 +37,7 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('status', 'Status', 'required|trim');
 
         if($this->form_validation->run() == FALSE) {
-            $this->load->view('admin/v_buku-tambah');
+            $this->load->view('admin/buku/v_buku-tambah');
         } else {
             $data = array(
                 'judul_buku' => $this->input->post('judul_buku'),
@@ -61,7 +66,7 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('status', 'Status', 'required|trim');
 
         if($this->form_validation->run() == FALSE) {
-            $this->load->view('admin/v_buku-edit', $data);
+            $this->load->view('admin/buku/v_buku-edit', $data);
         } else {
             $data = array(
                 'judul_buku' => $this->input->post('judul_buku'),
@@ -159,5 +164,21 @@ class Admin extends CI_Controller {
         $this->M_anggota->delete($id_anggota);
         $this->session->set_flashdata('success', 'Anggota berhasil di hapus!');
         redirect(base_url('admin/anggota'));
+    }
+
+    public function transaksi()
+    {
+        $data = [
+            'transaksi' => $this->M_transaksi->get()
+        ];
+
+        $this->load->view('admin/transaksi/v_transaksi', $data); 
+    }
+
+    public function transaksi_delete($id_transaksi)
+    {
+        $this->M_transaksi->delete($id_transaksi);
+        $this->session->set_flashdata('success', 'Transaksi berhasil di hapus!');
+        redirect(base_url('admin/transaksi'));
     }
 }
