@@ -48,9 +48,45 @@ class Anggota extends CI_Controller {
                 'status_transaksi' => 'peminjaman'
             );
 
-            $this->M_transaksi->pinjam_buku($data_simpan);
+            $data_update = array(
+                'status' => 'tidak'
+            );
+
+            $this->M_transaksi->pinjam_buku($data_simpan, $data_update, $id_buku);
             $this->session->set_flashdata('success', 'Buku berhasil di pinjam!');
             redirect(base_url('anggota/buku'));
         }
+
     } 
+    
+    public function peminjaman()
+    {
+        $username = $this->session->userdata('nama');
+        $id_anggota = $this->M_anggota->get_anggota_id($username);
+            
+        $data['peminjaman'] = $this->M_transaksi->get_peminjaman_anggota($id_anggota);
+        $this->load->view('anggota/v_peminjaman', $data);
+    }
+
+    public function kembalikan_buku()
+    {
+        $transaksi_update = array('status_transaksi' => 'pengembalian');
+        $buku_update = array('status' => 'tersedia');
+
+        $id_transaksi = $this->input->post('id_transaksi');
+        $id_buku = $this->input->post('id_buku');
+
+        $this->M_transaksi->kembalikan_buku($id_transaksi, $transaksi_update, $id_buku, $buku_update);
+        $this->session->set_flashdata('success', 'Buku berhasil di kembalikan!');
+        redirect(base_url('anggota/peminjaman'));
+    }
+
+    public function pengembalian()
+    {
+        $username = $this->session->userdata('nama');
+        $id_anggota = $this->M_anggota->get_anggota_id($username);
+            
+        $data['pengembalian'] = $this->M_transaksi->get_pengembalian_anggota($id_anggota);
+        $this->load->view('anggota/v_pengembalian', $data);
+    }
 }

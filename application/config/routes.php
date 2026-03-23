@@ -74,3 +74,7 @@ $route['anggota'] = 'anggota';
 
 $route['anggota/buku'] = 'anggota/daftar_buku';
 $route['anggota/buku/pinjam/(:num)'] = 'anggota/pinjam_buku/$1';
+
+$route['anggota/peminjaman'] = 'anggota/peminjaman';
+$route['anggota/kembalikan'] = 'anggota/kembalikan_buku';
+$route['anggota/pengembalian'] = 'anggota/pengembalian';

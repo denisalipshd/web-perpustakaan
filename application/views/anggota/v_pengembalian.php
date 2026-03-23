@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row mb-4">
         <div class="col d-flex justify-content-between align-items-center py-2">
-            <h2>Daftar Buku</h2>
+            <h2>Daftar Pengembalian Buku</h2>
         </div>
     </div>
 
@@ -21,30 +21,28 @@
                 <thead>
                     <tr class="text-center">
                         <th scope="col">No</th>
-                        <th scope="col">Judul</th>
-                        <th scope="col">Pengarang</th>
-                        <th scope="col">Penerbit</th>
-                        <th scope="col">Tahun Terbit</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Judul Buku</th>
+                        <th scope="col">Tanggal Pinjam</th>
+                        <th scope="col">Tanggal Kembali</th>
+                        <th scope="col">Status Transaksi</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $no = 1; ?>
-                    <?php foreach($buku as $b) : ?>
+                    <?php foreach($pengembalian as $p) : ?>
                     <tr class="align-middle text-center">
                         <th scope="row"><?= $no++ ?></th>
-                        <td><?= $b['judul_buku'] ?></td>
-                        <td><?= $b['pengarang'] ?></td>
-                        <td><?= $b['penerbit'] ?></td>
-                        <td><?= $b['tahun_terbit'] ?></td>
-                        <td><?= $b['status'] ?></td>
+                        <td><?= $p['judul_buku'] ?></td>
+                        <td><?= $p['tgl_pinjam'] ?></td>
+                        <td><?= $p['tgl_kembali'] ?></td>
+                        <td><?= $p['status_transaksi'] ?></td>
                         <td>
-                            <?php if ($b['status'] == 'tersedia') : ?>
-                                <a href="<?= base_url('anggota/buku/pinjam/'.$b['id_buku']) ?>" class="btn btn-success btn-sm">Pinjam</a>
+                            <?php if ($p['status'] == 'tersedia') : ?>
+                                <a href="<?= base_url('anggota/buku/pinjam/'.$p['id_buku']) ?>" class="btn btn-success btn-sm">Pinjam Lagi?</a>
                             <?php else : ?>
                                 <button class="btn btn-secondary btn-sm" disabled>Sedang Dipinjam</button>
-                            <?php endif; ?>                        
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; ?>
